@@ -1,0 +1,37 @@
+name: Project Management Automation
+on:
+  issues:
+    types: [opened, labeled]
+  pull_request:
+    types: [opened, closed, reopened]
+
+jobs:
+  manage-project-board:
+    runs-on: ubuntu-latest
+    steps:
+      # Automatically add new issues to 'To Do' column
+      - name: Add new issues to Project
+        if: github.event_name == 'issues' && github.event.action == 'opened'
+        uses: actions-ecosystem/action-add-to-project@v1
+        with:
+          project-url: https://github.com/Dav082004/github-project-management-demo/projects/1
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          column-name: "To Do"
+
+      # Move PRs to 'In Review' when opened
+      - name: Move PR to In Review
+        if: github.event_name == 'pull_request' && github.event.action == 'opened'
+        uses: actions-ecosystem/action-add-to-project@v1
+        with:
+          project-url: https://github.com/Dav082004/github-project-management-demo/projects/1
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          column-name: "In Review"
+
+      # Move to 'Done' when PR is merged
+      - name: Move to Done when merged
+        if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged
+        uses: actions-ecosystem/action-add-to-project@v1
+        with:
+          project-url: https://github.com/Dav082004/github-project-management-demo/projects/1
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          column-name: "Done"
