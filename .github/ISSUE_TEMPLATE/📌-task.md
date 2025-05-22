@@ -1,10 +1,18 @@
 ---
 name: "\U0001F4CC Task"
 about: Task for project management workshop
-title: ''
+title: "[TASK]"
 labels: task
 assignees: ''
 
+---
+
+---
+name: 📌 Task
+about: Task for project management workshop
+title: "[TASK] "
+labels: task
+assignees: ""
 ---
 
 ## Description
